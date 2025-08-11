@@ -1,5 +1,5 @@
 ---
-- name: Install .NET 8 on Debian 13
+- name: Install .NET
   hosts: localhost
   become: yes
 
@@ -20,9 +20,18 @@
       state: present
       update_cache: no
     
-  - name: Install .NET SDK
+  - name: Install .NET 8 SDK
     apt:
       name: dotnet-sdk-8.0
       state: present
       update_cache: yes
+
+  - name: Install .NET 9 SDK
+    apt:
+      name: dotnet-sdk-9.0
+      state: present
+      update_cache: yes
+
+  - name: Install csharp-ls
+    shell: dotnet tool install --global csharp-ls
 
