@@ -1,0 +1,28 @@
+---
+- name: Install .NET 8 on Debian 13
+  hosts: localhost
+  become: yes
+
+  tasks:
+  - name: Download MS product repository
+    get_url:
+    # still using Debian 12 (Bookworm) packages because Debian 13
+    # (Trixie) packages not available yet.
+      url: https://packages.microsoft.com/config/debian/12/packages-microsoft-prod.deb
+      dest: /tmp/packages-microsoft-prod.deb
+
+  - name: Install MS product repository
+    apt: deb=/tmp/packages-microsoft-prod.deb
+    
+  - name: Make sure HTTPS is supported by apt
+    apt:
+      name: apt-transport-https
+      state: present
+      update_cache: no
+    
+  - name: Install .NET SDK
+    apt:
+      name: dotnet-sdk-8.0
+      state: present
+      update_cache: yes
+
