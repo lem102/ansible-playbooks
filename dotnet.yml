@@ -1,7 +1,6 @@
 ---
 - name: Install .NET
   hosts: localhost
-  become: yes
 
   tasks:
   - name: Download MS product repository
@@ -12,25 +11,36 @@
       dest: /tmp/packages-microsoft-prod.deb
 
   - name: Install MS product repository
+    become: yes
     apt: deb=/tmp/packages-microsoft-prod.deb
     
   - name: Make sure HTTPS is supported by apt
+    become: yes
     apt:
       name: apt-transport-https
       state: present
       update_cache: no
     
   - name: Install .NET 8 SDK
+    become: yes
     apt:
       name: dotnet-sdk-8.0
       state: present
       update_cache: yes
 
   - name: Install .NET 9 SDK
+    become: yes
     apt:
       name: dotnet-sdk-9.0
       state: present
       update_cache: yes
+
+  - name: Update workloads
+    become: yes
+    shell: dotnet workload update
+
+  - name: Trust certificate
+    shell: dotnet dev-certs https --trust
 
   - name: Install csharp-ls
     shell: dotnet tool install --global csharp-ls
