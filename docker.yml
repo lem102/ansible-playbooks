@@ -34,3 +34,16 @@
         - docker-compose-plugin
       state: present
       update_cache: yes
+
+  - name: Create the docker group
+    become: yes
+    ansible.builtin.group:
+      name: docker
+      state: present
+
+  - name: Add the user to the docker group
+    become: yes
+    ansible.builtin.user:
+      name: jacobl
+      groups: docker
+      append: yes
