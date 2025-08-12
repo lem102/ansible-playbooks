@@ -1,0 +1,11 @@
+---
+- name: Install psql
+  hosts: localhost
+
+  tasks:
+  - name: Install psql
+    become: yes
+    apt:
+      name: postgresql-client
+      state: present
+      update-cache: no
