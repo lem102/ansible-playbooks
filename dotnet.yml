@@ -39,8 +39,10 @@
     become: yes
     shell: dotnet workload update
 
-  - name: Trust certificate
-    shell: dotnet dev-certs https --trust
+  # TODO: figure out how to ignore errors, then can uncomment this task
+  # - name: Trust certificate
+    # ignore-errors: true
+    # shell: dotnet dev-certs https --trust
 
   - name: Install csharp-ls
     shell: dotnet tool install --global csharp-ls
