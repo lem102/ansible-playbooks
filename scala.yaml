@@ -1,0 +1,14 @@
+---
+- name: Install Scala
+  hosts: localhost
+
+  tasks:
+  - name: Download scala cli deb file
+    get_url:
+      url: https://github.com/Virtuslab/scala-cli/releases/latest/download/scala-cli-x86_64-pc-linux.deb
+      dest: /tmp/scala-cli.deb
+
+  - name: Install scala cli
+    become: yes
+    apt: deb=/tmp/scala-cli.deb
+
